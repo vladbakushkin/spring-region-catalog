@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS regions
+(
+    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name       VARCHAR(255) NOT NULL,
+    short_name VARCHAR(63)  NOT NULL
+);

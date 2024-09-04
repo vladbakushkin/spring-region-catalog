@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+        'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="org.bakushkin.springregioncatalog.mapper.RegionMapper">
+
+    <insert id="save" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO REGIONS (name, short_name)
+        VALUES (#{name}, #{shortName});
+    </insert>
+
+    <select id="findById" resultMap="RegionMap">
+        SELECT id, name, short_name
+        FROM REGIONS
+        WHERE id = #{id};
+    </select>
+
+    <update id="update">
+        UPDATE REGIONS
+        SET name      = #{name},
+            short_name=#{shortName}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM REGIONS
+        WHERE id = #{id};
+    </delete>
+
+    <select id="findAll" resultMap="RegionMap">
+        SELECT id, name, short_name
+        FROM REGIONS;
+    </select>
+
+    <resultMap id="RegionMap" type="Region">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="shortName" column="short_name"/>
+    </resultMap>
+</mapper>
