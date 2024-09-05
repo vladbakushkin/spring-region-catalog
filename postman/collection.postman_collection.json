@@ -1,0 +1,527 @@
+{
+  "info": {
+    "_postman_id": "42718b01-d4cc-4e58-a09f-a7c9543074c2",
+    "name": "collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "25474611"
+  },
+  "item": [
+    {
+      "name": "validation",
+      "item": [
+        {
+          "name": "add region without name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+                  "    pm.response.to.be.badRequest;    \r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shortName\": \"SB\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/regions",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "regions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add region without shortname",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {\r",
+                  "    pm.response.to.be.badRequest;    \r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shortName\": \"SB\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/regions",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "regions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get region not found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+                  "    pm.response.to.be.notFound;    \r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/regions/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "regions",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "add region spb",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+              "    pm.response.to.have.status(201);  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "const source = JSON.parse(pm.request.body.raw);\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Регион должен содержать поля: id, name, shortName\", function () {\r",
+              "pm.expect(target).to.have.property('id');\r",
+              "pm.expect(target).to.have.property('name');\r",
+              "pm.expect(target).to.have.property('shortName');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+              "    pm.expect(target.id).to.not.be.null;\r",
+              "    pm.expect(source.name).equal(target.name, 'name должно соответствовать отправленному в запросе');\r",
+              "    pm.expect(source.shortName).equal(target.shortName, 'shortName должно соответствовать отправленному в запросе');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Saint-Petersburg\",\n    \"shortName\": \"SB\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get region spb",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+              "    pm.response.to.be.ok;  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Регион должен содержать поля: id, name, shortName\", function () {\r",
+              "pm.expect(target).to.have.property('id');\r",
+              "pm.expect(target).to.have.property('name');\r",
+              "pm.expect(target).to.have.property('shortName');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add region msk",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+              "    pm.response.to.have.status(201);  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "const source = JSON.parse(pm.request.body.raw);\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Регион должен содержать поля: id, name, shortName\", function () {\r",
+              "pm.expect(target).to.have.property('id');\r",
+              "pm.expect(target).to.have.property('name');\r",
+              "pm.expect(target).to.have.property('shortName');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+              "    pm.expect(target.id).to.not.be.null;\r",
+              "    pm.expect(source.name).equal(target.name, 'name должно соответствовать отправленному в запросе');\r",
+              "    pm.expect(source.shortName).equal(target.shortName, 'shortName должно соответствовать отправленному в запросе');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Moscow\",\n    \"shortName\": \"MSK\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update shortname spb",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+              "    pm.response.to.be.ok;  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "const source = JSON.parse(pm.request.body.raw);\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Регион должен содержать поля: id, name, shortName\", function () {\r",
+              "pm.expect(target).to.have.property('id');\r",
+              "pm.expect(target).to.have.property('name');\r",
+              "pm.expect(target).to.have.property('shortName');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+              "    pm.expect(target.id).to.not.be.null;\r",
+              "    pm.expect(source.shortName).equal(target.shortName, 'shortName должен соответствовать отправленному в запросе');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"shortName\": \"SBp\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all regions",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+              "    pm.response.to.be.ok;    \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "const target = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Регионы должны содержать поля: id, name, shortName\", function () {\r",
+              "    pm.expect(target[0]).to.have.property('id');\r",
+              "    pm.expect(target[0]).to.have.property('name');\r",
+              "    pm.expect(target[0]).to.have.property('shortName');\r",
+              "    pm.expect(target[1]).to.have.property('id');\r",
+              "    pm.expect(target[1]).to.have.property('name');\r",
+              "    pm.expect(target[1]).to.have.property('shortName');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Должено быть найдено только два региона\", function () {\r",
+              "    pm.expect(target.length).to.eql(2);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete region msk",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions/2",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get region msk (not found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
+              "    pm.response.to.be.notFound;    \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/regions/2",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "regions",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
