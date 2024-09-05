@@ -8,6 +8,8 @@ import org.bakushkin.springregioncatalog.entity.Region;
 import org.bakushkin.springregioncatalog.exception.NotFoundException;
 import org.bakushkin.springregioncatalog.mapper.RegionMapper;
 import org.bakushkin.springregioncatalog.util.RegionDtoMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,7 @@ public class RegionService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable("regions")
     public RegionDto getRegion(Long regionId) {
         Region region = findRegionById(regionId);
         log.info("found region: {}", region);
@@ -37,6 +40,7 @@ public class RegionService {
     }
 
     @Transactional
+    @CacheEvict(value = "regions", key = "#regionId")
     public RegionDto updateRegion(Long regionId, RegionDto regionDto) {
         Region regionToUpdate = findRegionById(regionId);
 
@@ -54,6 +58,7 @@ public class RegionService {
     }
 
     @Transactional
+    @CacheEvict(value = "regions", key = "#regionId")
     public void deleteRegion(Long regionId) {
         regionMapper.delete(regionId);
         log.info("deleted region: {}", regionId);
