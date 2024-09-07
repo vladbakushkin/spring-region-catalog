@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +69,9 @@ public class RegionService {
     public List<RegionDto> getAllRegions() {
         List<Region> regions = regionMapper.findAll();
         log.info("found regions: {}", regions);
+        if (regions == null || regions.isEmpty()) {
+            return new ArrayList<>();
+        }
         return regions.stream()
                 .map(RegionDtoMapper::toRegionDto)
                 .collect(Collectors.toList());
