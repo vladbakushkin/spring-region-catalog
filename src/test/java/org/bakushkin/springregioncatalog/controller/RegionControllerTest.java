@@ -151,27 +151,21 @@ class RegionControllerTest {
 
     @Test
     @SneakyThrows
-    void getAllRegions_whenRequestIsValid_shouldReturnAllRegions() {
+    void getAllRegions_whenRequestIsValid_shouldReturnOneRegion() {
         // given
         RegionDto regionDto1 = createRegionDto();
-        RegionDto regionDto2 = new RegionDto();
-        regionDto2.setId(2L);
-        regionDto2.setName("Moscow");
-        regionDto2.setShortName("MSK");
 
-        when(regionService.getAllRegions()).thenReturn(List.of(regionDto1, regionDto2));
+        when(regionService.getAllRegions(1, 0)).thenReturn(List.of(regionDto1));
 
         // when & then
         mockMvc.perform(
                         get("/regions")
-                                .contentType(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("limit", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNotEmpty())
                 .andExpect(jsonPath("$[0].name").value("Saint-Petersburg"))
-                .andExpect(jsonPath("$[0].shortName").value("SPb"))
-                .andExpect(jsonPath("$[1].id").isNotEmpty())
-                .andExpect(jsonPath("$[1].name").value("Moscow"))
-                .andExpect(jsonPath("$[1].shortName").value("MSK"));
+                .andExpect(jsonPath("$[0].shortName").value("SPb"));
     }
 
     private RegionDto createRegionDto() {

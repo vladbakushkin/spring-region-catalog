@@ -1,6 +1,7 @@
 package org.bakushkin.springregioncatalog.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.bakushkin.springregioncatalog.entity.Region;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface RegionMapper {
 
     Region findById(Long id);
 
-    List<Region> findAll();
+    List<Region> findAll(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     void update(Region region);
 

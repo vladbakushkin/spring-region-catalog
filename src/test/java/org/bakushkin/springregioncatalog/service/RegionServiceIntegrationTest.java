@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -39,5 +41,29 @@ class RegionServiceIntegrationTest {
         assertEquals("Saint-Petersburg", regionDto.getName());
         assertEquals("SBp", regionDto.getShortName());
         assertEquals(newRegion.getId(), regionDto.getId());
+    }
+
+    @Test
+    public void getAllRegions() {
+        // given
+        Region region1 = new Region();
+        region1.setName("Saint-Petersburg");
+        region1.setShortName("SBp");
+        regionMapper.save(region1);
+
+        Region region2 = new Region();
+        region2.setName("Moscow");
+        region2.setShortName("MSK");
+        regionMapper.save(region2);
+
+        // when
+        List<RegionDto> allRegions = regionService.getAllRegions(1, 0);
+
+        // then
+        assertNotNull(allRegions);
+        assertEquals(1, allRegions.size());
+        assertEquals("Saint-Petersburg", allRegions.get(0).getName());
+        assertEquals("SBp", allRegions.get(0).getShortName());
+        assertEquals(region1.getId(), allRegions.get(0).getId());
     }
 }

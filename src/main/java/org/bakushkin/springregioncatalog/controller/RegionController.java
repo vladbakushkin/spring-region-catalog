@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
@@ -172,8 +174,9 @@ public class RegionController {
 
     @Operation(
             summary = "Получает все регионы из справочника",
-            description = "Возвращает список всех регионов, содержащихся в базе данных." +
-                    " Если регионы не найдены - возвращает пустой список."
+            description = "Возвращает список регионов, содержащихся в базе данных. " +
+                    "Параметры пагинации limit и offset используются для определения количества " +
+                    "возвращаемых записей и смещения. Если регионы не найдены - возвращает пустой список."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -195,8 +198,9 @@ public class RegionController {
             )
     })
     @GetMapping
-    public List<RegionDto> getAllRegions() {
-        log.info("getting all regions");
-        return regionService.getAllRegions();
+    public List<RegionDto> getAllRegions(@Positive @RequestParam(defaultValue = "10") Integer limit,
+                                         @PositiveOrZero @RequestParam(defaultValue = "0") Integer offset) {
+        log.info("getting all regions with limit {} and offset {}", limit, offset);
+        return regionService.getAllRegions(limit, offset);
     }
 }

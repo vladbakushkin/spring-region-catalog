@@ -29,7 +29,9 @@
 
     <select id="findAll" resultMap="RegionMap">
         SELECT id, name, short_name
-        FROM REGIONS;
+        FROM REGIONS
+        ORDER BY id
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <resultMap id="RegionMap" type="Region">

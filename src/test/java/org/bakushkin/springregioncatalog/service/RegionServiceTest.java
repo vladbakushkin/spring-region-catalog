@@ -138,13 +138,15 @@ class RegionServiceTest {
         region2.setName("Region2");
         region2.setShortName("R2");
 
-        when(regionMapper.findAll()).thenReturn(List.of(region1, region2));
+        when(regionMapper.findAll(10, 0)).thenReturn(List.of(region1, region2));
 
         // when
-        List<RegionDto> result = regionService.getAllRegions();
+        List<RegionDto> result = regionService.getAllRegions(10, 0);
+
+        // then
         assertEquals(2, result.size());
         assertEquals("Region1", result.get(0).getName());
         assertEquals("Region2", result.get(1).getName());
-        verify(regionMapper).findAll();
+        verify(regionMapper).findAll(10, 0);
     }
 }
