@@ -2,8 +2,9 @@ package org.bakushkin.springregioncatalog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.UpdateRegionDto;
 import org.bakushkin.springregioncatalog.exception.NotFoundException;
 import org.bakushkin.springregioncatalog.service.RegionService;
 import org.junit.jupiter.api.Test;
@@ -124,12 +125,15 @@ class RegionControllerTest {
         RegionDto regionDto = createRegionDto();
         regionDto.setName("Moscow");
 
-        when(regionService.updateRegion(1L, regionDto)).thenReturn(regionDto);
+        UpdateRegionDto updateRegionDto = new UpdateRegionDto();
+        updateRegionDto.setName("Moscow");
+
+        when(regionService.updateRegion(1L, updateRegionDto)).thenReturn(regionDto);
 
         // when & then
         mockMvc.perform(patch("/regions/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(regionDto)))
+                        .content(objectMapper.writeValueAsString(updateRegionDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.name").value("Moscow"))

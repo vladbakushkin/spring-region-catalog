@@ -1,7 +1,7 @@
 package org.bakushkin.springregioncatalog.service;
 
 import lombok.RequiredArgsConstructor;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
 import org.bakushkin.springregioncatalog.entity.Region;
 import org.bakushkin.springregioncatalog.mapper.RegionMapper;
 import org.junit.jupiter.api.Test;

@@ -2,8 +2,9 @@ package org.bakushkin.springregioncatalog.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.UpdateRegionDto;
 import org.bakushkin.springregioncatalog.entity.Region;
 import org.bakushkin.springregioncatalog.exception.NotFoundException;
 import org.bakushkin.springregioncatalog.mapper.RegionMapper;
@@ -41,7 +42,7 @@ public class RegionService {
 
     @Transactional
     @CacheEvict(value = "regions", key = "#regionId")
-    public RegionDto updateRegion(Long regionId, RegionDto regionDto) {
+    public RegionDto updateRegion(Long regionId, UpdateRegionDto regionDto) {
         Region regionToUpdate = findRegionById(regionId);
 
         if (regionDto.getName() != null) {

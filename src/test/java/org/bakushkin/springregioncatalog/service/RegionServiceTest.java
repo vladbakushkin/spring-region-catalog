@@ -1,7 +1,8 @@
 package org.bakushkin.springregioncatalog.service;
 
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.UpdateRegionDto;
 import org.bakushkin.springregioncatalog.entity.Region;
 import org.bakushkin.springregioncatalog.mapper.RegionMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ class RegionServiceTest {
 
     private NewRegionDto newRegionDto;
     private Region region;
-    private RegionDto regionDto;
+    private UpdateRegionDto updateRegionDto;
 
     @BeforeEach
     public void setUp() {
@@ -42,10 +43,9 @@ class RegionServiceTest {
         region.setName("Saint-Petersburg");
         region.setShortName("SPb");
 
-        regionDto = new RegionDto();
-        regionDto.setId(1L);
-        regionDto.setName("Saint-Petersburg");
-        regionDto.setShortName("SPb");
+        updateRegionDto = new UpdateRegionDto();
+        updateRegionDto.setName("Moscow");
+        updateRegionDto.setShortName("MSK");
     }
 
     @Test
@@ -84,12 +84,12 @@ class RegionServiceTest {
         when(regionMapper.findById(anyLong())).thenReturn(region);
 
         // when
-        RegionDto result = regionService.updateRegion(1L, regionDto);
+        RegionDto result = regionService.updateRegion(1L, updateRegionDto);
 
         // then
         assertNotNull(result);
-        assertEquals("Saint-Petersburg", result.getName());
-        assertEquals("SPb", result.getShortName());
+        assertEquals("Moscow", result.getName());
+        assertEquals("MSK", result.getShortName());
         verify(regionMapper).findById(1L);
         verify(regionMapper).update(region);
     }
@@ -98,7 +98,7 @@ class RegionServiceTest {
     void updateRegion_whenNameUpdated_shouldReturnRegionDto() {
         // given
         when(regionMapper.findById(anyLong())).thenReturn(region);
-        RegionDto partialUpdateDto = new RegionDto();
+        UpdateRegionDto partialUpdateDto = new UpdateRegionDto();
         partialUpdateDto.setName("Moscow");
 
         // when

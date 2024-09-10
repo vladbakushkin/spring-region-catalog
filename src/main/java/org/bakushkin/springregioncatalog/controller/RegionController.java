@@ -13,8 +13,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.UpdateRegionDto;
 import org.bakushkin.springregioncatalog.exception.ErrorResponse;
 import org.bakushkin.springregioncatalog.service.RegionService;
 import org.springframework.http.HttpStatus;
@@ -148,7 +149,7 @@ public class RegionController {
     })
     @PatchMapping("{regionId}")
     public RegionDto updateRegion(@PathVariable Long regionId,
-                                  @RequestBody @Valid RegionDto regionDto) {
+                                  @RequestBody @Valid UpdateRegionDto regionDto) {
         log.info("updating region: regionId={}", regionId);
         return regionService.updateRegion(regionId, regionDto);
     }

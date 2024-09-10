@@ -2,7 +2,7 @@ package org.bakushkin.springregioncatalog.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
 import org.bakushkin.springregioncatalog.mapper.RegionMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

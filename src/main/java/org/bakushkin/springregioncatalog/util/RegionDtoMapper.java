@@ -1,7 +1,7 @@
 package org.bakushkin.springregioncatalog.util;
 
-import org.bakushkin.springregioncatalog.controller.dto.NewRegionDto;
-import org.bakushkin.springregioncatalog.controller.dto.RegionDto;
+import org.bakushkin.springregioncatalog.dto.NewRegionDto;
+import org.bakushkin.springregioncatalog.dto.RegionDto;
 import org.bakushkin.springregioncatalog.entity.Region;
 
 public final class RegionDtoMapper {
