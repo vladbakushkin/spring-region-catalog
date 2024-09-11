@@ -25,6 +25,7 @@ public class RegionService {
     private final RegionMapper regionMapper;
 
     @Transactional
+    @Cacheable(value = "regions", key = "#newRegionDto.name")
     public RegionDto addRegion(NewRegionDto newRegionDto) {
         Region region = RegionDtoMapper.toRegion(newRegionDto);
         regionMapper.save(region);
